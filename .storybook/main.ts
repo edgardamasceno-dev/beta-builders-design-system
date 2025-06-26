@@ -15,8 +15,11 @@ const config: StorybookConfig = {
     "name": "@storybook/react-vite",
     "options": {}
   },
-  async viteFinal(config) {
+  async viteFinal(config, { configType }) {
+    const isProduction = configType === 'PRODUCTION';
+
     return mergeConfig(config, {
+      base: isProduction ? '/beta-builders-design-system/' : '/',
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '../src'),
