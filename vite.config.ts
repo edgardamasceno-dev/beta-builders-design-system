@@ -23,7 +23,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'ds',
-      fileName: 'ds',
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
