@@ -2,6 +2,8 @@
 
 A personal collection of React components.
 
+[View Storybook](https://edgardamasceno-dev.github.io/beta-builders-design-system)
+
 ## Versioning
 
 This library uses [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for version control. To release a new version, create a new tag and push it to the repository.
