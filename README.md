@@ -1,16 +1,25 @@
-# My Design System
+# Beta Builders Design System
 
 A personal collection of React components.
+
+## Versioning
+
+This library uses [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for version control. To release a new version, create a new tag and push it to the repository.
+
+```bash
+git tag v1.0.1
+git push origin v1.0.1
+```
 
 ## Installation
 
 This library is intended to be installed directly from a private GitHub repository.
 
-In your project's `package.json`, add the following to your dependencies, replacing `<github_user>/<repo_name>` with the actual repository path:
+In your project's `package.json`, add the following to your dependencies. You can specify a version by appending a tag to the repository URL (e.g., `#v1.0.1`).
 
 ```json
 "dependencies": {
-  "my-ds": "github:<github_user>/<repo_name>"
+  "beta-builders-design-system": "github:edgardamasceno-dev/beta-builders-design-system#v1.0.1"
 }
 ```
 
@@ -24,16 +33,16 @@ yarn install
 pnpm install
 ```
 
-## Setup
+## Styling
 
-To use the components, you need to import the library's stylesheet.
+This library is designed to inherit styles from your application. For this to work correctly, you'll need to configure your project to share its Tailwind and shadcn styles.
 
-1.  **Import the CSS:**
+1.  **Peer Dependencies:**
 
-    In your main application file (e.g., `main.tsx` or `App.tsx`), import the stylesheet:
+    Ensure that you have the following packages installed in your project. These are required for the components to function correctly.
 
-    ```tsx
-    import 'my-ds/dist/ds.css'
+    ```bash
+    npm install tailwind-merge clsx
     ```
 
 2.  **Configure Tailwind CSS:**
@@ -45,7 +54,7 @@ To use the components, you need to import the library's stylesheet.
     module.exports = {
       content: [
         './src/**/*.{js,ts,jsx,tsx}',
-        './node_modules/my-ds/dist/**/*.js', // Add this line
+        './node_modules/beta-builders-design-system/dist/**/*.js',
       ],
       theme: {
         extend: {},
@@ -54,12 +63,20 @@ To use the components, you need to import the library's stylesheet.
     }
     ```
 
+3.  **Import the Stylesheet:**
+
+    In your main application file (e.g., `main.tsx` or `App.tsx`), import the stylesheet:
+
+    ```tsx
+    import 'beta-builders-design-system/dist/index.css'
+    ```
+
 ## Usage
 
 Here's how to use the `CounterCard` component.
 
 ```tsx
-import { CounterCard } from 'my-ds';
+import { CounterCard } from 'beta-builders-design-system';
 
 function MyComponent() {
   return (
