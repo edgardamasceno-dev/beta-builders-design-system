@@ -1,6 +1,7 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { CounterCard } from "./counter-card";
+import { CounterCard } from "../../../src/components/counter-card";
 
 describe("CounterCard", () => {
   it("renders the title and count", () => {

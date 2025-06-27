@@ -26,7 +26,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "test:e2e": "playwright test"
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test && npx playwright show-report"
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.7",
