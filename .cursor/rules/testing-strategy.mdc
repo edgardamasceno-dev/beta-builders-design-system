@@ -3,43 +3,115 @@ description: "Defines the strategy and standards for writing unit and end-to-end
 globs: ["src/**/*.spec.ts", "src/**/*.test.ts", "tests/**/*.spec.ts"]
 alwaysApply: true
 ---
-
 # Testing Strategy
 
 A robust testing strategy is crucial for maintaining a high-quality component library. This document outlines the standards for both unit and end-to-end (E2E) tests.
 
-## 1. Unit Tests (Jest & React Testing Library)
+## 1. Test Structure & Organization
+
+### Centralized Test Directory
+All tests are centralized in the `tests/` directory at the project root:
+
+```
+tests/
+├── unit/
+│   └── components/
+│       ├── counter-card.test.tsx       # Custom components
+│       └── ui/
+│           └── card.test.tsx           # UI library components (if needed)
+└── e2e/
+    └── counter-card.spec.ts            # End-to-end tests
+```
+
+### File Naming Convention
+- **Unit Tests**: `component-name.test.tsx`
+- **E2E Tests**: `component-name.spec.ts`
+
+### Test Exclusions
+**DO NOT create tests for:**
+- Components in `src/components/ui/` (shadcn/ui library components)
+- These are third-party components with their own testing
+- Focus testing efforts on custom business logic components
+
+## 2. Unit Tests (Jest & React Testing Library)
 
 Unit tests focus on testing individual components in isolation. They should be fast, specific, and cover all essential component logic.
 
-- **What to Test:**
-    - **Rendering:** Ensure the component renders correctly given a specific set of props. Test that conditional content appears or disappears based on props.
-    - **User Interaction:** Simulate user events (clicks, form input, keyboard events) and assert that the component's state or callback props behave as expected.
-    - **Accessibility:** Use helpers from `jest-axe` to check for basic accessibility violations.
+### What to Test:
+- **Rendering:** Ensure the component renders correctly given a specific set of props. Test that conditional content appears or disappears based on props.
+- **User Interaction:** Simulate user events (clicks, form input, keyboard events) and assert that the component's state or callback props behave as expected.
+- **Accessibility:** Use helpers from `jest-axe` to check for basic accessibility violations.
 
-- **Best Practices:**
-    - **File Location:** Test files must be co-located with the component they are testing (e.g., `button.spec.ts` next to `button.tsx`).
-    - **Element Selection:** Prefer user-facing attributes for selecting elements (`getByRole`, `getByLabelText`, `getByText`). Use `data-testid` only as a last resort when no other selector makes sense.
-    - **Mocking:** Mock all external dependencies, such as API calls, modules, or timers, to ensure tests are fast and deterministic.
-    - **Assertions:** Write clear and specific assertions. Instead of just checking if an element exists, check if it exists *and* has the correct content or attributes.
+### Best Practices:
+- **File Location:** Tests must be in `tests/unit/components/` directory
+- **Import Paths:** Adjust imports to reference the component location: `import { CounterCard } from '../../../src/components/counter-card'`
+- **Element Selection:** Prefer user-facing attributes for selecting elements (`getByRole`, `getByLabelText`, `getByText`). Use `data-testid` only as a last resort when no other selector makes sense.
+- **Mocking:** Mock all external dependencies, such as API calls, modules, or timers, to ensure tests are fast and deterministic.
+- **Assertions:** Write clear and specific assertions. Instead of just checking if an element exists, check if it exists *and* has the correct content or attributes.
 
-## 2. End-to-End Tests (Playwright)
+### Coverage Requirements:
+- **100% coverage** required for all custom components
+- **Exclude** `src/components/ui/**` from coverage (configured in jest.config.ts)
+- **Focus** on business logic and custom component behavior
 
-E2E tests focus on verifying complete user flows from start to finish. They are slower and more complex than unit tests and should be reserved for critical application paths. For a component library, E2E tests are primarily used to test the deployed Storybook environment.
+## 3. End-to-End Tests (Playwright)
 
-- **What to Test:**
-    - **Storybook Functionality:** Create tests that navigate the deployed Storybook instance, click through different stories, and interact with component controls to ensure everything renders correctly in a real browser environment.
-    - **Complex User Flows:** If a component is part of a complex, multi-step interaction (e.g., a multi-page form), an E2E test can validate the entire flow.
-    - **Visual Regressions:** Use Playwright's visual regression testing capabilities to take snapshots of components and fail tests if a visual change is detected unexpectedly.
+E2E tests focus on verifying complete user flows from start to finish. They are slower and more complex than unit tests and should be reserved for critical application paths.
 
-- **Best Practices:**
-    - **File Location:** E2E tests should reside in the `tests/` directory at the root of the project.
-    - **Test from the User's Perspective:** Write tests that mimic how a real user would interact with the application. Avoid relying on internal implementation details.
-    - **Page Object Model (POM):** For larger test suites, consider using the Page Object Model pattern to create reusable selectors and actions for different parts of your UI, making tests more readable and maintainable.
-    - **CI/CD Integration:** E2E tests should be run as part of your Continuous Integration pipeline against a preview or staging deployment, not during local development.
+### What to Test:
+- **Storybook Functionality:** Create tests that navigate the deployed Storybook instance, click through different stories, and interact with component controls to ensure everything renders correctly in a real browser environment.
+- **Complex User Flows:** If a component is part of a complex, multi-step interaction (e.g., a multi-page form), an E2E test can validate the entire flow.
+- **Visual Regressions:** Use Playwright's visual regression testing capabilities to take snapshots of components and fail tests if a visual change is detected unexpectedly.
 
-## 3. General Principles
+### Best Practices:
+- **File Location:** E2E tests must be in `tests/e2e/` directory
+- **Storybook URLs:** Use direct iframe URLs for robust testing: `http://localhost:6006/iframe.html?id=components-countercard--default`
+- **Test from the User's Perspective:** Write tests that mimic how a real user would interact with the application. Avoid relying on internal implementation details.
+- **Page Object Model (POM):** For larger test suites, consider using the Page Object Model pattern to create reusable selectors and actions for different parts of your UI, making tests more readable and maintainable.
+- **CI/CD Integration:** E2E tests should be run as part of your Continuous Integration pipeline against a preview or staging deployment, not during local development.
+
+## 4. Test Commands
+
+### Unit Tests
+```bash
+# Run unit tests with coverage
+npm run test:coverage
+
+# Watch mode for development
+npm run test:watch
+```
+
+### E2E Tests
+```bash
+# Run E2E tests (all browsers)
+npm run test:e2e
+
+# Run specific browser
+npx playwright test --project=chromium
+```
+
+### All Tests
+```bash
+# Run both unit and E2E tests
+npm test
+```
+
+## 5. General Principles
 
 - **Clarity over Brevity:** Write tests that are easy to understand, even if it means they are slightly more verbose.
 - **One Assertion per Test (When Possible):** While not a strict rule, aim to have tests that focus on a single behavior.
 - **Coverage:** While 100% test coverage is not always a practical goal, all critical logic, complex UI interactions, and business rules MUST be covered by tests.
+- **Test Organization:** Group related tests using `describe` blocks for better organization and readability.
+
+## 6. Component Testing Checklist
+
+When creating tests for a new component:
+
+- [ ] **Unit Tests Created** in `tests/unit/components/`
+- [ ] **100% Coverage** achieved for the component
+- [ ] **All Props Tested** including edge cases and defaults
+- [ ] **User Interactions** covered (clicks, inputs, etc.)
+- [ ] **Conditional Rendering** scenarios tested
+- [ ] **E2E Tests Added** in `tests/e2e/` (if component has complex interactions)
+- [ ] **Accessibility** basic checks included
+- [ ] **Error States** and edge cases covered
