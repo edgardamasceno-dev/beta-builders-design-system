@@ -1,0 +1,60 @@
+---
+description: "A comprehensive set of Clean Code rules for building high-quality, maintainable React components and libraries."
+globs: ["src/**/*.tsx", "src/**/*.ts"]
+alwaysApply: true
+---
+
+# React Clean Code & Best Practices
+
+These rules are designed to ensure the codebase remains maintainable, scalable, and easy to read. All new code MUST adhere to these principles.
+
+## 1. Component Design
+
+- **Single Responsibility Principle (SRP):** Components should be small and do one thing well. If a component grows too large or handles multiple concerns (e.g., fetching data, managing complex state, and rendering multiple sections), break it down into smaller, focused components.
+    - **Bad:** A single `Dashboard` component that handles user data, renders a chart, and contains a settings form.
+    - **Good:** A `Dashboard` container that uses a `UserData` component, a `Chart` component, and a `SettingsForm` component.
+
+- **Keep Components Small:** Aim to keep component files under 100-150 lines. Large components are a code smell indicating they are likely doing too much.
+
+- **Props:**
+    - **Destructure props:** Always destructure props for clarity.
+    - **Use TypeScript/PropTypes:** All components must have clearly defined prop types. Use TypeScript interfaces or `PropTypes`. Name prop types with `PascalCase` and end with `Props` (e.g., `ButtonProps`).
+    - **Avoid Prop Drilling:** If you are passing props through more than two levels of components, it's a sign to use the Context API, a state management library, or component composition.
+    - **Boolean Props:** Use the shorthand for boolean props. Write `<MyComponent isVisible />` instead of `<MyComponent isVisible={true} />`.
+
+## 2. Naming Conventions
+
+- **Components:** Use `PascalCase` (e.g., `PlayerCard`, `SettingsMenu`).
+- **Hooks:** Use `camelCase` and start with `use` (e.g., `useWindowSize`, `useFetchData`).
+- **Functions & Variables:** Use descriptive `camelCase` names (e.g., `handleInputChange`, `filteredUsers`). Avoid abbreviations or single-letter variables unless they are for iterators in short loops (e.g., `i`, `j`, `k`).
+
+## 3. Code Structure & Organization
+
+- **File Structure:** Group files by feature or component. All files related to a single component (e.g., `CounterCard.tsx`, `CounterCard.stories.tsx`, `counter-card.spec.ts`) should be co-located.
+- **Import Order:** Maintain a structured import order to improve readability.
+    1.  React and its hooks (`import React from 'react'`).
+    2.  External/third-party libraries (`import { clsx } from 'clsx'`).
+    3.  Internal components (`import { Button } from '@/components/ui/button'`).
+    4.  Local utilities or types (`import { cn } from '@/lib/utils'`).
+    5.  Stylesheets (`import './styles.css'`).
+
+- **Separate Concerns:** Do not define styled-components, complex helper functions, or large constant objects inside a component file. Move them to their own dedicated files (e.g., `lib/utils.ts`, `components/ui/styles.ts`).
+
+## 4. State & Logic
+
+- **Custom Hooks:** If you find yourself repeating stateful logic across multiple components (e.g., fetching data, tracking window size), extract it into a custom hook.
+- **`useState` vs. `useReducer`:** For simple state (booleans, strings, numbers), `useState` is fine. If you have complex state logic involving multiple sub-values, or if the next state depends on the previous one, prefer `useReducer`. A good rule of thumb: if a component has more than 3-4 `useState` calls, consider refactoring to `useReducer`.
+- **Avoid Magic Values:** Do not use hardcoded strings or numbers directly in your code. Extract them into meaningful constants at the top of the file or in a shared constants file.
+
+## 5. JSX & Rendering
+
+- **Readability:** Keep JSX clean and readable. If you have complex conditional rendering, extract it into a separate function or component.
+- **No Inline Styles:** Do not use the `style` prop for inline styles (`style={{ color: 'red' }}`). This hurts performance and is hard to maintain. Use CSS classes via TailwindCSS and `clsx`/`cn`.
+- **Fragments:** Use fragments (`<>...</>`) instead of unnecessary `<div>` wrappers to avoid adding extra nodes to the DOM.
+- **Keys:** When rendering a list, always provide a stable and unique `key` prop. Do not use the array index as a key, as it can lead to performance issues and bugs with dynamic lists. Use a unique ID from the data item instead.
+
+## 6. General Cleanliness
+
+- **No Commented-Out Code:** Dead code should be deleted. Version control (Git) is there if you need to recover it.
+- **No `console.log`:** Remove all `console.log` statements before committing code. Use a proper logger for debugging if necessary.
+- **Self-Describing Code:** Write code that is easy to understand without comments. Good naming and small functions are better than a heavily commented complex function.

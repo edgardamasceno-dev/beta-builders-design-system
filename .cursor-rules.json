@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "local-dev-best-practices",
+      "title": "Local Development Best Practices",
+      "description": "General rules to ensure code quality, consistency, and maintainability within the project.",
+      "alwaysApply": true,
+      "body": [
+        "**Code Quality & Linting**:",
+        "- All code must pass ESLint checks before being committed. Run `npm run lint` to check your changes.",
+        "- Follow the existing code style and patterns. When in doubt, refer to surrounding files.",
+        "\n**Testing**:",
+        "- New features, components, or utilities should be accompanied by corresponding tests.",
+        "- While this was not enforced in previous commits, all future work should aim for reasonable test coverage.",
+        "\n**Dependencies**:",
+        "- Do not add new dependencies without discussion.",
+        "- Regularly update existing dependencies to their latest minor/patch versions to incorporate security fixes and improvements."
+      ]
+    },
+    {
+      "id": "git-workflow-and-commitizen",
+      "title": "Git Workflow and Commitizen Usage",
+      "description": "Rules for Git branching, commit messages, and pull requests to maintain a clean and understandable version history.",
+      "alwaysApply": true,
+      "body": [
+        "**Branching Strategy (Gitflow)**:",
+        "- `main`: This branch is for production-ready, tagged releases only. Direct commits are not allowed.",
+        "- `development`: This is the main integration branch for ongoing development. All feature branches are merged into this branch.",
+        "- **Feature Branches**: All new features must be developed in a separate branch. Branch off from `development`.",
+        "  - Naming convention: `feature/<feature-name>` (e.g., `feature/add-login-page`)",
+        "- **Fix Branches**: For bug fixes. Branch off from `development`.",
+        "  - Naming convention: `fix/<issue-or-fix-name>` (e.g., `fix/header-layout-issue`)",
+        "- **Chore Branches**: For maintenance tasks that are not features or fixes (e.g., updating dependencies, refactoring). Branch off from `development`.",
+        "  - Naming convention: `chore/<task-name>` (e.g., `chore/update-storybook-deps`)",
+        "\n**Committing Changes (Commitizen)**:",
+        "- **ALL COMMITS MUST BE CREATED USING COMMITIZEN.**",
+        "- To commit your staged changes, run `git cz` in the terminal and follow the prompts.",
+        "- This enforces the **Conventional Commits** specification (e.g., `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `test:`, `chore:`).",
+        "- Adhering to this is crucial for automatic changelog generation (`cz-conventional-changelog`).",
+        "\n**Pull Requests (PRs)**:",
+        "- All feature, fix, and chore branches must be merged into `development` via a pull request.",
+        "- PRs should be small, focused, and have a clear description of the changes.",
+        "- Ensure all CI checks (linting, tests) are passing before requesting a review."
+      ]
+    }
+  ]
+}

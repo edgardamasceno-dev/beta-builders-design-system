@@ -1,0 +1,22 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Automatic Branch Management
+
+Before starting any code modifications, analyze the user's request to determine the nature of the task.
+
+1.  **Identify Task Type**:
+    *   Is it a new feature, an enhancement, or new functionality? -> **feature**
+    *   Is it a bug fix, an error correction, or an issue resolution? -> **fix**
+    *   Is it a refactor, a documentation update, a dependency upgrade, or other maintenance? -> **chore**
+
+2.  **Create a New Branch**:
+    *   If you are on the `main` or `development` branch, and the task requires code changes, you MUST create a new branch.
+    *   Use the following naming convention: `[type]/[short-description-of-task]`
+    *   Examples: `feature/add-user-authentication`, `fix/header-layout-issue`, `chore/upgrade-react-version`.
+
+3.  **Proceed with Work**:
+    *   Once the new branch is created and checked out, proceed with implementing the requested changes.
+    *   Do not ask for permission to create the branch; perform this action proactively as part of the workflow.
