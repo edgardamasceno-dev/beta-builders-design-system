@@ -106,3 +106,25 @@ npm run dev
 ```
 
 This will open Storybook in your browser, where you can view and interact with the components in isolation.
+
+### Contributing
+
+Before contributing, please read our standards and guidelines:
+
+- 📋 **Pull Request Standards** - Defined in `.cursor/rules/pull-request-management.mdc`
+- 🧪 **Testing Strategy** - Defined in `.cursor/rules/testing-strategy.mdc`
+- 🎨 **Storybook** - All components must have stories (see `.cursor/rules/storybook-best-practices.mdc`)
+- ⚛️ **React Guidelines** - Follow clean code practices (see `.cursor/rules/react-clean-code.mdc`)
+
+### Testing
+
+```bash
+# Run unit tests with coverage
+npm run test:coverage
+
+# Run E2E tests
+npm run test:e2e
+
+# Run all tests
+npm test
+```
