@@ -3,20 +3,20 @@ name: Deploy Storybook
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    
+    # Only run if this is a push to main (not a PR)
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
     permissions:
       contents: read
       pages: write
       id-token: write
-
-    # GitHub Pages environment configuration
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
     concurrency:
@@ -49,4 +49,6 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} 
