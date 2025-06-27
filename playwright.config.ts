@@ -69,10 +69,15 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "npm run storybook",
-    url: "http://localhost:6006",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // Only start webServer locally, CI handles this differently
+  ...(process.env.CI
+    ? {}
+    : {
+        webServer: {
+          command: "npm run storybook",
+          url: "http://localhost:6006",
+          reuseExistingServer: true,
+          timeout: 120 * 1000,
+        },
+      }),
 });
