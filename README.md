@@ -106,3 +106,25 @@ npm run dev
 ```
 
 This will open Storybook in your browser, where you can view and interact with the components in isolation.
+
+### Contributing
+
+Before contributing, please read our standards and guidelines:
+
+- 📋 **[Pull Request Standards](docs/pull-request-standards.md)** - Complete guide for creating consistent PRs
+- 📝 **[Review Templates](docs/review-templates.md)** - Templates for consistent code reviews
+- 🧪 **Testing** - Run `npm run test:coverage` to ensure tests pass and coverage is maintained
+- 🎨 **Storybook** - All components must have stories in Storybook
+
+### Testing
+
+```bash
+# Run unit tests with coverage
+npm run test:coverage
+
+# Run E2E tests
+npm run test:e2e
+
+# Run all tests
+npm test
+```

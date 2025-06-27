@@ -1,29 +1,39 @@
-## Descrição
+## 🚀 [Type] Brief Summary
 
-<!-- Descreva as mudanças propostas neste Pull Request. Seja claro e conciso. -->
+<!-- Replace [Type] with: Feature, Fix, Docs, Refactor, Test, or Chore -->
 
-## Tipo de Mudança
+### 📝 Changes Made
+- **Change 1**: Description of what was changed
+- **Change 2**: Description of what was changed
+- **Change 3**: Description of what was changed
 
-<!-- Marque com um 'x' entre os colchetes o tipo de mudança que este PR introduz. -->
+### 🔧 Technical Details
+- **Files Modified**: List key files changed
+- **Dependencies**: Any new dependencies added/removed
+- **Breaking Changes**: None OR describe breaking changes
 
-- [ ] Bug fix (correção de um problema)
-- [ ] Nova feature (adição de uma nova funcionalidade)
-- [ ] Melhoria (melhoria em funcionalidade existente, refatoração, etc.)
-- [ ] Documentação (apenas mudanças na documentação)
-- [ ] Chore (mudanças que não afetam o código-fonte, como atualizações de dependências, configurações de build, etc.)
+### ✅ Testing
+- **Unit Tests**: [ ] Added/Updated OR [ ] Not Required
+- **E2E Tests**: [ ] Added/Updated OR [ ] Not Required
+- **Coverage**: X% coverage maintained/improved
+- **Manual Testing**: Brief description of manual testing done
 
-## Checklist
+### 📊 Impact
+- **Performance**: No impact OR describe performance changes
+- **Bundle Size**: No impact OR describe size changes
+- **Accessibility**: No impact OR describe a11y improvements
 
-<!-- Certifique-se de que todos os itens abaixo foram concluídos antes de solicitar a revisão. -->
+### 🎯 Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Comments added for complex code
+- [ ] Documentation updated (if needed)
+- [ ] Tests added/updated and passing
+- [ ] No breaking changes (or clearly documented)
 
-- [ ] Meu código segue as diretrizes de estilo do projeto.
-- [ ] Eu revisei meu próprio código.
-- [ ] Eu adicionei comentários, especialmente em áreas complexas do código.
-- [ ] Eu atualizei a documentação relevante (se aplicável).
-- [ ] Meus testes (se aplicável) passaram.
-- [ ] Eu adicionei testes que provam que minha correção é eficaz ou que minha feature funciona.
-- [ ] Eu executei o linter e corrigi quaisquer problemas.
+### 📸 Screenshots (if UI changes)
+<!-- Add screenshots or GIFs showing the changes -->
 
-## Contexto Adicional
-
-<!-- Adicione qualquer outro contexto ou capturas de tela/vídeos que possam ajudar na revisão. -->
+### 🔗 Related Issues
+<!-- Link to related issues or discussions -->
+Closes #[issue-number]
