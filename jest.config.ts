@@ -4,9 +4,7 @@ const config: Config = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  testMatch: [
-    "<rootDir>/tests/unit/**/*.{test,spec}.{js,jsx,ts,tsx}"
-  ],
+  testMatch: ["<rootDir>/tests/unit/**/*.{test,spec}.{js,jsx,ts,tsx}"],
   collectCoverageFrom: [
     "src/components/**/*.{js,jsx,ts,tsx}",
     "src/lib/**/*.{js,jsx,ts,tsx}",
@@ -23,14 +21,15 @@ const config: Config = {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   transform: {
-    "^.+\\.(ts|tsx)$": ["ts-jest", { 
-      tsconfig: "tsconfig.jest.json" 
-    }],
+    "^.+\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        tsconfig: "tsconfig.jest.json",
+      },
+    ],
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
-  transformIgnorePatterns: [
-    "node_modules/(?!(.*\\.mjs$))",
-  ],
+  transformIgnorePatterns: ["node_modules/(?!(.*\\.mjs$))"],
 };
 
 export default config;

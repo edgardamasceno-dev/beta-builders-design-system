@@ -21,13 +21,17 @@
     "build": "vite build",
     "predeploy": "npm run build-storybook",
     "deploy": "gh-pages -d storybook-static",
-    "lint": "eslint .",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format .",
+    "format:write": "biome format --write .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:e2e": "playwright test && npx playwright show-report"
+    "test:e2e": "playwright test",
+    "test:e2e:report": "npx playwright show-report"
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.7",
@@ -36,6 +40,9 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.0.5",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.29.0",
     "@playwright/test": "^1.53.1",
     "@storybook/addon-docs": "^9.0.13",
@@ -56,6 +63,7 @@
     "eslint-plugin-storybook": "^9.0.13",
     "gh-pages": "^6.3.0",
     "globals": "^16.2.0",
+    "http-server": "^14.1.1",
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^30.0.2",
     "postcss": "^8.5.6",
@@ -73,5 +81,13 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.3.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "biome check --write"
+    ],
+    "*.{json,md}": [
+      "biome format --write"
+    ]
   }
 }

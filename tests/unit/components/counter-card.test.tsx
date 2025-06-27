@@ -1,15 +1,15 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import React from "react";
 import "@testing-library/jest-dom";
 import { CounterCard } from "../../../src/components/counter-card";
 
 describe("CounterCard", () => {
   it("renders the title and count", () => {
     render(<CounterCard title="Total Users" count={150} />);
-    
+
     const titleElement = screen.getByText("Total Users");
     const countElement = screen.getByText("150");
-    
+
     expect(titleElement).toBeInTheDocument();
     expect(countElement).toBeInTheDocument();
   });
@@ -27,7 +27,7 @@ describe("CounterCard", () => {
         maxCount={20}
         showSlotsInfo={true}
         slotsAvailableText="vagas restantes"
-      />
+      />,
     );
     expect(screen.getByText("15 vagas restantes")).toBeInTheDocument();
   });
@@ -39,18 +39,14 @@ describe("CounterCard", () => {
         count={5}
         maxCount={20}
         showSlotsInfo={true}
-      />
+      />,
     );
     expect(screen.getByText("15 slots disponíveis")).toBeInTheDocument();
   });
 
   it("renders the description", () => {
     render(
-      <CounterCard
-        title="Projects"
-        count={12}
-        description="Active projects"
-      />
+      <CounterCard title="Projects" count={12} description="Active projects" />,
     );
     expect(screen.getByText("Active projects")).toBeInTheDocument();
   });
@@ -58,7 +54,7 @@ describe("CounterCard", () => {
   it("renders the action button", () => {
     const actionButton = <button type="button">Details</button>;
     render(
-      <CounterCard title="Projects" count={12} actionButton={actionButton} />
+      <CounterCard title="Projects" count={12} actionButton={actionButton} />,
     );
     expect(screen.getByRole("button", { name: "Details" })).toBeInTheDocument();
   });
@@ -71,7 +67,7 @@ describe("CounterCard", () => {
           count={50}
           maxCount={100}
           variant="percentage"
-        />
+        />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).toHaveClass("bg-green-100");
@@ -84,7 +80,7 @@ describe("CounterCard", () => {
           count={75}
           maxCount={100}
           variant="percentage"
-        />
+        />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).toHaveClass("bg-yellow-100");
@@ -97,7 +93,7 @@ describe("CounterCard", () => {
           count={95}
           maxCount={100}
           variant="percentage"
-        />
+        />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).toHaveClass("bg-red-100");
@@ -111,7 +107,7 @@ describe("CounterCard", () => {
           maxCount={100}
           variant="percentage"
           description="Server storage"
-        />
+        />,
       );
       expect(screen.getByText("Server storage")).toBeInTheDocument();
     });
@@ -125,7 +121,7 @@ describe("CounterCard", () => {
           variant="percentage"
           showSlotsInfo={true}
           slotsAvailableText="spots available"
-        />
+        />,
       );
       expect(screen.getByText("20 spots available")).toBeInTheDocument();
     });
@@ -139,7 +135,7 @@ describe("CounterCard", () => {
           count={50}
           maxCount={100}
           variant="default"
-        />
+        />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).not.toHaveClass("bg-green-100");
@@ -149,7 +145,7 @@ describe("CounterCard", () => {
 
     it("renders without variant prop (defaults to default)", () => {
       const { container } = render(
-        <CounterCard title="Default" count={50} maxCount={100} />
+        <CounterCard title="Default" count={50} maxCount={100} />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).not.toHaveClass("bg-green-100");
@@ -178,7 +174,7 @@ describe("CounterCard", () => {
           title="Custom Class"
           count={123}
           className="custom-test-class"
-        />
+        />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).toHaveClass("custom-test-class");
@@ -191,11 +187,7 @@ describe("CounterCard", () => {
 
     it("formats large numbers in maxCount correctly", () => {
       render(
-        <CounterCard
-          title="Large Max"
-          count={500000}
-          maxCount={1000000}
-        />
+        <CounterCard title="Large Max" count={500000} maxCount={1000000} />,
       );
       expect(screen.getByText("/1,000,000")).toBeInTheDocument();
     });
@@ -207,14 +199,18 @@ describe("CounterCard", () => {
           count={50}
           showSlotsInfo={true}
           slotsAvailableText="slots"
-        />
+        />,
       );
       expect(screen.queryByText("slots")).not.toBeInTheDocument();
     });
 
     it("renders percentage variant without maxCount (should not apply colors)", () => {
       const { container } = render(
-        <CounterCard title="No Max Percentage" count={50} variant="percentage" />
+        <CounterCard
+          title="No Max Percentage"
+          count={50}
+          variant="percentage"
+        />,
       );
       const card = container.firstChild as HTMLElement;
       expect(card).not.toHaveClass("bg-green-100");
@@ -230,7 +226,7 @@ describe("CounterCard", () => {
           count={60}
           maxCount={100}
           variant="percentage"
-        />
+        />,
       );
       const card60 = container60.firstChild as HTMLElement;
       expect(card60).toHaveClass("bg-yellow-100");
@@ -242,7 +238,7 @@ describe("CounterCard", () => {
           count={90}
           maxCount={100}
           variant="percentage"
-        />
+        />,
       );
       const card90 = container90.firstChild as HTMLElement;
       expect(card90).toHaveClass("bg-red-100");
@@ -260,9 +256,9 @@ describe("CounterCard", () => {
           count={100}
           maxCount={100}
           showSlotsInfo={true}
-        />
+        />,
       );
       expect(screen.getByText("0 slots disponíveis")).toBeInTheDocument();
     });
   });
-}); 
+});

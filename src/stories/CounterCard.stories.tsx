@@ -1,5 +1,5 @@
-import { CounterCard } from "@/components/counter-card";
 import type { Meta, StoryObj } from "@storybook/react";
+import { CounterCard } from "@/components/counter-card";
 
 const meta: Meta<typeof CounterCard> = {
   title: "Components/CounterCard",
