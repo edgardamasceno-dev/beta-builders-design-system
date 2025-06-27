@@ -1,40 +1,169 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
-# Pull Request Management
+# Pull Request & Code Review Standards
 
-## Creating Pull Requests
+These standards ensure consistency, quality, and professional communication across all code contributions.
 
-When asked to create a pull request, follow these steps:
+## 1. Pull Request Format
 
-1.  **Title**: The PR title MUST follow the Conventional Commit format (e.g., `feat: Add user profile page`, `fix: Correct login validation`). The type should reflect the overall nature of the changes in the branch.
-2.  **Target Branch**: All PRs should target the `development` branch unless explicitly instructed otherwise.
-3.  **Body/Description**: The PR body should be detailed and clear.
-    *   Start with a high-level summary of the changes.
-    *   Use bullet points to list the specific changes made.
-    *   If it resolves an existing issue, link to it (e.g., "Closes #123").
-    *   Do not simply list the commit messages. Provide a human-readable summary.
+### Title Convention
+Follow the Conventional Commits format:
+```
+<type>(<scope>): <description>
 
-## Reviewing Pull Requests
+Examples:
+feat(components): add new Button component with variants
+fix(tests): resolve Jest configuration issues
+docs(storybook): update component documentation
+refactor(utils): improve type safety in utility functions
+```
 
-When asked to review a pull request, perform the following checks:
+### Description Template
+Use this structure for all PR descriptions:
 
-1.  **Code Quality**:
-    *   Does the code adhere to the project's linting rules and style guide?
-    *   Is the code clear, readable, and maintainable?
-2.  **Functionality**:
-    *   Do the changes correctly implement the requested feature or fix the reported bug?
-    *   Have you pulled down the branch and run the project locally (e.g., `npm run storybook`) to manually verify the changes?
-    *   Have you run the build (`npm run build`) and tests (`npm test`) to ensure nothing is broken?
-3.  **Testing**:
-    *   Are there new tests for the new functionality?
-    *   Do all existing and new tests pass?
-4.  **PR Description**:
-    *   Does the PR title and description accurately reflect the changes?
+- **Changes Made**: Bullet points of what was changed
+- **Technical Details**: Files modified, dependencies, breaking changes
+- **Testing**: Unit/E2E tests status and coverage info
+- **Impact**: Performance, bundle size, accessibility changes
+- **Checklist**: Style guidelines, review, comments, docs, tests
 
-## Approving Pull Requests
+### Required Labels
+Apply appropriate labels:
+- `type:feat`, `type:fix`, `type:docs`, `type:refactor`, `type:test`, `type:chore`
+- `priority:high`, `priority:medium`, `priority:low`
 
-- **Approve** the PR only if all the review checks pass without any issues. Add a brief, positive confirmation comment (e.g., "Looks great! All checks passed. Approving.").
-- **Request Changes** if you find any issues. Leave specific, actionable comments on the lines of code where adjustments are needed. Summarize the required changes in a single review comment. Do not approve the PR.
+## 2. Code Review Guidelines
+
+### Review Types & Templates
+
+#### ✅ Approval Review
+```markdown
+## ✅ LGTM! Excellent work
+
+### 🎯 Highlights
+- **Quality**: [Specific quality aspects that stood out]
+- **Implementation**: [What was implemented well]
+- **Testing**: [Testing quality remarks]
+
+### 💡 Minor Suggestions (Optional)
+- Consider [suggestion] for future improvement
+
+**Approved!** 🚀
+```
+
+#### 🔄 Changes Requested Review
+```markdown
+## 🔄 Changes Requested
+
+### ⚠️ Must Fix
+1. **[Critical Issue]**: Description
+   - **Location**: `file.tsx:line`
+   - **Problem**: What's wrong
+   - **Solution**: Suggested fix
+
+### 💡 Suggestions
+1. **[Improvement]**: Description
+   - **Current**: What it is now
+   - **Suggested**: What it could be
+   - **Benefit**: Why this would be better
+
+### 🎯 Positive Feedback
+- [Something that was done well]
+
+Great work overall! Looking forward to the updates. 👍
+```
+
+## 3. Review Process
+
+### For Reviewers
+**What to Look For:**
+1. **Code Quality**: Style guidelines, readability, TypeScript usage
+2. **Functionality**: Meets requirements, handles edge cases, no bugs
+3. **Testing**: Adequate coverage, meaningful tests, E2E for critical paths
+4. **Documentation**: TSDoc comments, Storybook stories, README updates
+
+**Response Times:**
+- Critical fixes: Within 4 hours
+- Regular features: Within 24 hours
+- Documentation: Within 48 hours
+
+### For PR Authors
+**Before Requesting Review:**
+- [ ] Self-review completed
+- [ ] All tests passing (`npm run test:coverage`, `npm run test:e2e`)
+- [ ] No lint errors (`npm run lint`)
+- [ ] Description complete and accurate
+- [ ] Screenshots for UI changes
+
+**Responding to Reviews:**
+- Address all "Must Fix" items
+- Respond to suggestions with implementation or explanation
+- Thank reviewers for feedback
+- Re-request review after changes
+
+## 4. Testing Requirements
+
+### Test Structure
+Tests are centralized in `tests/` directory:
+```
+tests/
+├── unit/
+│   └── components/
+│       ├── component-name.test.tsx    # Custom components only
+│       └── ui/                        # AVOID: shadcn components
+└── e2e/
+    └── component-name.spec.ts
+```
+
+### Coverage Requirements
+- **100% coverage** required for custom components
+- **NO tests** for `src/components/ui/` (shadcn components)
+- **Focus** on business logic and custom functionality
+
+## 5. Special Cases
+
+### Emergency Hotfixes
+```markdown
+## 🚨 HOTFIX: Brief Description
+
+### 🔥 Critical Issue
+**Problem**: [What's broken in production]
+**Impact**: [How users are affected]
+
+### 🛠️ Fix Applied
+**Solution**: [What was done]
+**Testing**: [How verified]
+
+**Requires immediate merge for production stability**
+```
+
+### Large Features
+For complex features:
+- Break into smaller PRs when possible
+- Include architecture overview
+- Suggest review order for reviewers
+- Document new patterns introduced
+
+## 6. Automation Integration
+
+### Required Checks
+All PRs must pass:
+- [ ] Unit tests (Jest)
+- [ ] E2E tests (Playwright)
+- [ ] Linting (Biome)
+- [ ] Type checking (TypeScript)
+- [ ] Build success
+
+### Branch Protection
+- `main` and `development` branches require:
+  - Up-to-date with base branch
+  - Status checks passing
+  - At least 1 approving review
+  - No stale reviews after updates
+
+---
+
+*These standards ensure consistent, high-quality code reviews that maintain code quality while fostering collaborative development.*
