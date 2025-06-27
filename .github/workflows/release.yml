@@ -1,0 +1,118 @@
+name: Build and Update Release
+
+on:
+  release:
+    types: [created, published, edited]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to update'
+        required: true
+        type: string
+
+jobs:
+  build-and-update-release:
+    name: Build Library and Update Release
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history to access all tags
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:coverage
+
+      - name: Build library
+        run: npm run build
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Get release tag
+        id: get-tag
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout release tag
+        run: |
+          git checkout ${{ steps.get-tag.outputs.tag }}
+
+      - name: Commit dist folder
+        run: |
+          git add dist/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update dist folder for release ${{ steps.get-tag.outputs.tag }}"
+            git tag -f ${{ steps.get-tag.outputs.tag }}
+            git push origin ${{ steps.get-tag.outputs.tag }} --force
+          fi
+
+      - name: Create release archive
+        run: |
+          # Create a clean archive with only necessary files
+          mkdir -p release-archive
+          
+          # Copy essential files
+          cp -r dist/ release-archive/
+          cp package.json release-archive/
+          cp README.md release-archive/
+          cp CHANGELOG.md release-archive/
+          
+          # Create tarball
+          cd release-archive
+          tar -czf ../beta-builders-design-system-${{ steps.get-tag.outputs.tag }}.tar.gz .
+          cd ..
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./beta-builders-design-system-${{ steps.get-tag.outputs.tag }}.tar.gz
+          asset_name: beta-builders-design-system-${{ steps.get-tag.outputs.tag }}.tar.gz
+          asset_content_type: application/gzip
+        if: github.event_name == 'release'
+
+      - name: Update release notes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = '${{ steps.get-tag.outputs.tag }}';
+            const release = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: tag
+            });
+            
+            const updatedBody = release.data.body + '\n\n---\n\n✅ **Dist folder automatically built and included**\n\n📦 **Files included in this release:**\n- `dist/index.js` - ES Module build\n- `dist/index.umd.cjs` - UMD build\n- `dist/index.css` - Compiled styles\n- `dist/index.d.ts` - TypeScript declarations\n\n🔧 **Installation:**\n```bash\nnpm install github:edgardamasceno-dev/beta-builders-design-system#' + tag + '\n```';
+            
+            await github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: release.data.id,
+              body: updatedBody
+            });
+        if: github.event_name == 'release' 
