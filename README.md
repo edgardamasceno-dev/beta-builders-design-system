@@ -111,10 +111,10 @@ This will open Storybook in your browser, where you can view and interact with t
 
 Before contributing, please read our standards and guidelines:
 
-- 📋 **[Pull Request Standards](docs/pull-request-standards.md)** - Complete guide for creating consistent PRs
-- 📝 **[Review Templates](docs/review-templates.md)** - Templates for consistent code reviews
-- 🧪 **Testing** - Run `npm run test:coverage` to ensure tests pass and coverage is maintained
-- 🎨 **Storybook** - All components must have stories in Storybook
+- 📋 **Pull Request Standards** - Defined in `.cursor/rules/pull-request-management.mdc`
+- 🧪 **Testing Strategy** - Defined in `.cursor/rules/testing-strategy.mdc`
+- 🎨 **Storybook** - All components must have stories (see `.cursor/rules/storybook-best-practices.mdc`)
+- ⚛️ **React Guidelines** - Follow clean code practices (see `.cursor/rules/react-clean-code.mdc`)
 
 ### Testing
 
