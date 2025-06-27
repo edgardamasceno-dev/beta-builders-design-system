@@ -1,0 +1,65 @@
+---
+description: "Sets the standards for documenting new components, features, and architectural decisions."
+globs: ["**/*.tsx", "**/*.md", "**/*.mdx"]
+alwaysApply: true
+---
+
+# Documentation Standards
+
+Clear, concise, and accessible documentation is essential for project maintainability, collaboration, and onboarding. All new implementations must be documented according to the following standards.
+
+## 1. Component Documentation
+
+Component-level documentation lives alongside the code and in Storybook.
+
+- **TSDoc for Props:** Every exported `type` or `interface` for a component's props MUST be documented using TSDoc comments. Each prop should have a clear, one-sentence description. This documentation is automatically used by Storybook and your IDE to provide context to developers.
+    ```typescript
+    export interface ButtonProps {
+      /**
+       * Is this the principal call to action on the page?
+       */
+      primary?: boolean;
+      /**
+       * What background color to use
+       */
+      backgroundColor?: string;
+      /**
+       * Button contents
+       */
+      label: string;
+      /**
+       * Optional click handler
+       */
+      onClick?: () => void;
+    }
+    ```
+
+- **Storybook Docs Page:** The auto-generated `Docs` page in Storybook serves as the primary documentation for a component's props and variations. Ensure all props are configurable via controls and that different use cases are represented by individual stories.
+
+- **MDX for In-Depth Guides:** For components that are particularly complex or have important design considerations, create an associated `.mdx` file (e.g., `Button.mdx`). This file can be used to write long-form documentation with usage guidelines, do's and don'ts, and live examples that will be rendered within Storybook.
+
+## 2. Feature & Architecture Documentation
+
+For larger-scale changes that involve multiple components or introduce new architectural patterns, create dedicated documentation.
+
+- **`/docs` Directory:** Create a `/docs` directory at the root of the project for high-level documentation.
+- **Architecture Decision Records (ADRs):** For significant architectural decisions (e.g., choosing a state management library, adopting a new testing strategy), create a new markdown file in `/docs/adr/`. The file should describe the context, the decision made, and the consequences.
+- **Feature Guides:** For new, complex features, create a guide in `/docs/features/`. This document should explain the feature's purpose, how the different parts work together, and include diagrams where helpful.
+
+## 3. Diagrams as Code
+
+- **Mermaid JS:** When a visual diagram is needed to explain a flow or architecture, use Mermaid JS syntax inside a markdown code block. This allows diagrams to be version-controlled and easily updated.
+    ````markdown
+    ```mermaid
+    graph TD;
+        A[User Action] -->|Triggers| B(API Call);
+        B --> C{Success?};
+        C -->|Yes| D[Update UI];
+        C -->|No| E[Show Error];
+    ```
+    ````
+
+## 4. Changelog
+
+- **Conventional Commits:** The project is configured to use Commitizen and Conventional Commits. This is not just for commit message consistency but also for automated changelog generation.
+- **Automated Changelog:** A `CHANGELOG.md` file will be maintained automatically by tools like `standard-version` or `release-it`, which parse the commit history to generate a record of all features, fixes, and breaking changes for each version. Adherence to the commit format is mandatory for this to work.

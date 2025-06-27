@@ -1,0 +1,79 @@
+---
+description: "Defines best practices for cataloging components in Storybook professionally and comprehensively."
+globs: ["src/**/*.stories.tsx"]
+alwaysApply: true
+---
+
+# Storybook Best Practices
+
+To ensure a high-quality, professional, and maintainable component library, all components MUST be cataloged in Storybook following these guidelines.
+
+## 1. Story File Structure
+
+- **Co-location:** Story files must be co-located with their corresponding component. For a component at `src/components/ui/button.tsx`, the story file must be at `src/components/ui/button.stories.tsx`.
+- **Naming:** Story files must use the `.stories.tsx` extension.
+
+## 2. Story Format (CSF 3.0)
+
+- **Default Export (Meta):** Every story file must have a default export that defines the component's metadata.
+    - `title`: A string that determines the component's path in the Storybook sidebar (e.g., `'Components/UI/Button'`).
+    - `component`: The actual component function/class.
+    - `tags: ['autodocs']`: This tag MUST be included to enable automatically generated documentation pages.
+    - `parameters`: For configuring Storybook features (e.g., `layout: 'centered'`).
+    - `argTypes`: To configure the controls for your component's props.
+
+- **Named Exports (Stories):** Each variation of a component is a named export.
+    - The name of the export becomes the story's name (e.g., `export const Primary = { ... };` creates a story named "Primary").
+    - Use `PascalCase` for story names.
+
+## 3. Writing Stories
+
+- **Base Story:** Create a "Default" or "Base" story that represents the component's most common use case.
+
+- **Prop Variations:** Create separate stories for all significant visual variations of a component based on its props (e.g., `Primary`, `Secondary`, `Destructive` for a Button).
+
+- **State Variations:** Create stories to represent different component states (e.g., `Loading`, `Disabled`, `WithIcon`).
+
+- **Using `args`:**
+    - Props should be passed to stories using the `args` object.
+    - Do not hardcode prop values inside the component's JSX in the story. This makes the component's props editable in the Storybook UI.
+    - **Good:** `args: { label: 'Click Me', primary: true }`
+    - **Bad:** `<Button label="Click Me" primary />`
+
+## 4. Controls & Documentation
+
+- **`argTypes` for Controls:** Customize the controls for your props using `argTypes`. For example, use a color picker for color props or a select dropdown for a set of string options.
+    ```javascript
+    argTypes: {
+      backgroundColor: { control: 'color' },
+      size: {
+        control: { type: 'select' },
+        options: ['small', 'medium', 'large'],
+      },
+    }
+    ```
+
+- **Documenting Props:** Use TSDoc comments directly above prop definitions in your component's TypeScript interface. Storybook will automatically parse these and display them in a props table on the Docs page.
+
+- **Actions for Callbacks:** To debug function props (like `onClick`), use the `'@storybook/addon-actions'` addon. `argTypes` can be configured to automatically create actions for props that match a certain pattern.
+    ```javascript
+    // .storybook/preview.ts
+    parameters: {
+      actions: { argTypesRegex: "^on[A-Z].*" },
+    }
+    ```
+
+## 5. Interaction Testing
+
+- **`play` Function:** For stories that involve user interaction (e.g., testing a form input), use the `play` function with helpers from `@storybook/testing-library`. This allows you to script interactions and verify outcomes directly in the browser.
+    ```javascript
+    import { userEvent, within } from '@storybook/testing-library';
+
+    export const FilledForm = {
+      play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        const emailInput = canvas.getByLabelText('email', { selector: 'input' });
+        await userEvent.type(emailInput, 'example-email@email.com', { delay: 100 });
+      },
+    };
+    ```
