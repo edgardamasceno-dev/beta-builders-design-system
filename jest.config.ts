@@ -16,6 +16,14 @@ const config: Config = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/*.test.{ts,tsx,js,jsx}',
+    '!src/**/*.stories.{ts,tsx,js,jsx}',
+    '!src/components/ui/**',
+    '!src/vite-env.d.ts',
+    '!src/index.ts',
+  ],
   coverageThreshold: {
     global: {
       branches: 80,
