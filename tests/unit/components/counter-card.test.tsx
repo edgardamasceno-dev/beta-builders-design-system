@@ -51,14 +51,6 @@ describe("CounterCard", () => {
     expect(screen.getByText("Active projects")).toBeInTheDocument();
   });
 
-  it("renders the action button", () => {
-    const actionButton = <button type="button">Details</button>;
-    render(
-      <CounterCard title="Projects" count={12} actionButton={actionButton} />,
-    );
-    expect(screen.getByRole("button", { name: "Details" })).toBeInTheDocument();
-  });
-
   describe("Percentage Variant Colors", () => {
     it("applies green colors for low percentage", () => {
       const { container } = render(
@@ -160,12 +152,6 @@ describe("CounterCard", () => {
       expect(screen.getByText("No Description")).toBeInTheDocument();
       expect(screen.getByText("42")).toBeInTheDocument();
       expect(screen.queryByText("Active projects")).not.toBeInTheDocument();
-    });
-
-    it("renders without action button", () => {
-      render(<CounterCard title="No Action" count={99} />);
-      expect(screen.getByText("No Action")).toBeInTheDocument();
-      expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
 
     it("renders with custom className", () => {

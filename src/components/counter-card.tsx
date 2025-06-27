@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,7 +12,6 @@ interface CounterCardProps {
   count: number;
   maxCount?: number;
   description?: string;
-  actionButton?: React.ReactNode;
   variant?: "default" | "percentage";
   className?: string;
   showSlotsInfo?: boolean;
@@ -46,7 +44,6 @@ export function CounterCard({
   title,
   count,
   maxCount,
-  actionButton,
   variant = "default",
   className = "",
   showSlotsInfo = false,
@@ -111,12 +108,6 @@ export function CounterCard({
           </div>
         )}
       </CardContent>
-
-      {actionButton && (
-        <CardFooter className="flex justify-end items-center p-0 mt-2">
-          {actionButton}
-        </CardFooter>
-      )}
     </Card>
   );
 }
