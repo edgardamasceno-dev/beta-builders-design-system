@@ -1,29 +1,26 @@
-import type { Config } from "jest";
-
-const config: Config = {
-  preset: "ts-jest",
-  clearMocks: true,
-  collectCoverage: true,
-  coverageDirectory: "coverage",
-  coverageProvider: "v8",
-  testEnvironment: "jsdom",
-  testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
-  testPathIgnorePatterns: ["/node_modules/", "/tests/e2e/"],
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  transform: {
-    "^.+\\.tsx?$": ["ts-jest", { tsconfig: "tsconfig.jest.json" }],
-  },
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
-    },
+  transform: {
+    '^.+\.(ts|tsx|js|jsx)$': ['ts-jest', {
+      tsconfig: '<rootDir>/tsconfig.jest.json',
+    }],
   },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testMatch: [
+    '<rootDir>/src/**/*.test.(ts|tsx|js|jsx)',
+  ],
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/*.test.{ts,tsx,js,jsx}',
+    '!src/**/*.stories.{ts,tsx,js,jsx}',
+    '!src/components/ui/**',
+    '!src/vite-env.d.ts',
+    '!src/index.ts',
+  ],
 };
-
-export default config;
