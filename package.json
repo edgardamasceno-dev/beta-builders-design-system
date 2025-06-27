@@ -10,6 +10,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
     }
@@ -35,7 +36,8 @@
     "test:e2e:report": "npx playwright show-report",
     "commit": "cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "standard-version"
+    "prerelease": "npm run build",
+    "release": "npm run prerelease && standard-version"
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.7",
