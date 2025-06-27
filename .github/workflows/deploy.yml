@@ -18,6 +18,11 @@ jobs:
       pages: write
       id-token: write
 
+    # GitHub Pages environment is required by deploy-pages action
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
     concurrency:
       group: "pages"
@@ -49,6 +54,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} 
+        uses: actions/deploy-pages@v4 
