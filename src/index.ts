@@ -1,5 +1,5 @@
 // Components
-export * from './components/counter-card';
+export * from "./components/counter-card";
 
 // Styles
-import './index.css';
+import "./index.css";

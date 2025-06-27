@@ -1,5 +1,22 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Git Workflow & Commitizen
+
+**Branching Strategy**:
+- `main`: This branch is for production-ready code. Direct pushes are forbidden.
+- `development`: This is the primary development branch. All feature branches are merged into `development`.
+- **Feature Branches**: Create branches from `development` using the naming convention `feature/<your-feature-name>` (e.g., `feature/add-login-button`).
+- **Fix Branches**: For bug fixes, branch from `development` using `fix/<issue-description>`.
+- **Chore Branches**: For maintenance tasks, use `chore/<task-description>`.
+
+**Commits**:
+- **All commits MUST be created using `git cz`**. This will launch the Commitizen CLI to guide you through creating a Conventional Commit message.
+- This ensures that all commits follow a standard format, which is crucial for automated changelog generation.
+
+**Pull Requests (PRs)**:
+- All PRs from `feature/*`, `fix/*`, or `chore/*` branches must target the `development` branch.
+- Before opening a PR, ensure your branch is up-to-date with the latest changes from `development`.
+- Provide a clear and descriptive title and body for your PR, explaining the "what" and "why" of your changes.

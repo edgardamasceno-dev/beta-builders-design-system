@@ -1,5 +1,17 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Implementation Review and PR Suggestion
+
+After you have finished implementing code changes for a feature, fix, or chore, follow this two-step process:
+
+1.  **Request User Validation**:
+    *   Do not assume the task is complete. You must ask the user to verify your work.
+    *   Your message should be similar to this: "I have completed the implementation of [briefly describe the task]. Could you please review the changes to confirm everything is working as expected?"
+
+2.  **Suggest Pull Request**:
+    *   **Only after the user explicitly confirms** that the implementation is correct and successful (e.g., "Yes, it's working," "Looks good," "Approved"), you should then suggest the next step.
+    *   Your follow-up message should be: "Great! Shall I now create a pull request with these changes?"
+    *   Do not proceed to create the pull request until the user agrees.

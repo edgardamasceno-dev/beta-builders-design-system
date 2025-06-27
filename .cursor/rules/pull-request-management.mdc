@@ -1,5 +1,40 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# Pull Request Management
+
+## Creating Pull Requests
+
+When asked to create a pull request, follow these steps:
+
+1.  **Title**: The PR title MUST follow the Conventional Commit format (e.g., `feat: Add user profile page`, `fix: Correct login validation`). The type should reflect the overall nature of the changes in the branch.
+2.  **Target Branch**: All PRs should target the `development` branch unless explicitly instructed otherwise.
+3.  **Body/Description**: The PR body should be detailed and clear.
+    *   Start with a high-level summary of the changes.
+    *   Use bullet points to list the specific changes made.
+    *   If it resolves an existing issue, link to it (e.g., "Closes #123").
+    *   Do not simply list the commit messages. Provide a human-readable summary.
+
+## Reviewing Pull Requests
+
+When asked to review a pull request, perform the following checks:
+
+1.  **Code Quality**:
+    *   Does the code adhere to the project's linting rules and style guide?
+    *   Is the code clear, readable, and maintainable?
+2.  **Functionality**:
+    *   Do the changes correctly implement the requested feature or fix the reported bug?
+    *   Have you pulled down the branch and run the project locally (e.g., `npm run storybook`) to manually verify the changes?
+    *   Have you run the build (`npm run build`) and tests (`npm test`) to ensure nothing is broken?
+3.  **Testing**:
+    *   Are there new tests for the new functionality?
+    *   Do all existing and new tests pass?
+4.  **PR Description**:
+    *   Does the PR title and description accurately reflect the changes?
+
+## Approving Pull Requests
+
+- **Approve** the PR only if all the review checks pass without any issues. Add a brief, positive confirmation comment (e.g., "Looks great! All checks passed. Approving.").
+- **Request Changes** if you find any issues. Leave specific, actionable comments on the lines of code where adjustments are needed. Summarize the required changes in a single review comment. Do not approve the PR.
