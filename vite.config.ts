@@ -10,6 +10,8 @@ export default defineConfig({
     dts({
       tsconfigPath: "./tsconfig.app.json",
       outDir: "dist",
+      insertTypesEntry: true,
+      exclude: ["**/*.stories.tsx", "**/*.test.tsx", "**/*.spec.ts"],
     }),
     tailwindcss(),
   ],
@@ -22,8 +24,9 @@ export default defineConfig({
     outDir: "dist",
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "ds",
+      name: "BetaBuildersDesignSystem",
       fileName: "index",
+      formats: ["es", "umd"],
     },
     rollupOptions: {
       external: ["react", "react-dom"],

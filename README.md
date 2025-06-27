@@ -1,105 +1,194 @@
 # Beta Builders Design System
 
-A personal collection of React components.
+A modern React component library built with TypeScript, Storybook, and TailwindCSS. Features comprehensive testing, automated deployment, and conventional commit workflows.
 
 [View Storybook](https://edgardamasceno-dev.github.io/beta-builders-design-system)
 
-## Versioning
+## 📦 Installation
 
-This library uses [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) for version control. To release a new version, create a new tag and push it to the repository.
+### Via npm (Recommended)
+
+Install the package directly from GitHub:
 
 ```bash
-git tag v1.0.1
-git push origin v1.0.1
+npm install github:edgardamasceno-dev/beta-builders-design-system#v0.0.2
 ```
 
-## Installation
+Or with other package managers:
 
-This library is intended to be installed directly from a private GitHub repository.
+```bash
+# Yarn
+yarn add github:edgardamasceno-dev/beta-builders-design-system#v0.0.2
 
-In your project's `package.json`, add the following to your dependencies. You can specify a version by appending a tag to the repository URL (e.g., `#v1.0.1`).
+# pnpm
+pnpm add github:edgardamasceno-dev/beta-builders-design-system#v0.0.2
+```
+
+### Via package.json
+
+Add to your `package.json` dependencies:
 
 ```json
-"dependencies": {
-  "beta-builders-design-system": "github:edgardamasceno-dev/beta-builders-design-system#v1.0.1"
+{
+  "dependencies": {
+    "beta-builders-design-system": "github:edgardamasceno-dev/beta-builders-design-system#v0.0.2"
+  }
 }
 ```
 
-Then, run your package manager's install command:
-
-```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
-```
-
-## Styling
+## 🎨 Styling Setup
 
 This library is designed to inherit styles from your application. For this to work correctly, you'll need to configure your project to share its Tailwind and shadcn styles.
 
-1.  **Peer Dependencies:**
+### 1. Install Peer Dependencies
 
-    Ensure that you have the following packages installed in your project. These are required for the components to function correctly.
+```bash
+npm install clsx tailwind-merge react react-dom
+```
 
-    ```bash
-    npm install tailwind-merge clsx
-    ```
+### 2. Configure Tailwind CSS
 
-2.  **Configure Tailwind CSS:**
+Update your `tailwind.config.js` to include the design system's component files:
 
-    For the styles to be applied correctly, you need to tell Tailwind to scan the design system's component files for classes. Update your `tailwind.config.js`:
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/beta-builders-design-system/dist/**/*.js',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
 
-    ```js
-    /** @type {import('tailwindcss').Config} */
-    module.exports = {
-      content: [
-        './src/**/*.{js,ts,jsx,tsx}',
-        './node_modules/beta-builders-design-system/dist/**/*.js',
-      ],
-      theme: {
-        extend: {},
-      },
-      plugins: [],
-    }
-    ```
+### 3. Import Styles
 
-3.  **Import the Stylesheet:**
+In your main application file (e.g., `main.tsx` or `App.tsx`):
 
-    In your main application file (e.g., `main.tsx` or `App.tsx`), import the stylesheet:
+```tsx
+import 'beta-builders-design-system/dist/index.css'
+```
 
-    ```tsx
-    import 'beta-builders-design-system/dist/index.css'
-    ```
+## 🚀 Usage
 
-## Usage
+### CounterCard Component
 
-Here's how to use the `CounterCard` component.
+The `CounterCard` is a versatile component for displaying numerical data with optional progress indication.
+
+#### Basic Usage
 
 ```tsx
 import { CounterCard } from 'beta-builders-design-system';
 
-function MyComponent() {
+function App() {
   return (
-    <div style={{ padding: '20px', width: '300px' }}>
+    <div className="p-4 max-w-sm">
+      <CounterCard
+        title="Total Users"
+        count={1234}
+      />
+    </div>
+  );
+}
+```
+
+#### With Progress Indication
+
+```tsx
+import { CounterCard } from 'beta-builders-design-system';
+
+function App() {
+  return (
+    <div className="p-4 max-w-sm">
       <CounterCard
         title="Vagas Preenchidas"
         count={78}
         maxCount={100}
         variant="percentage"
         showSlotsInfo={true}
+        slotsAvailableText="vagas disponíveis"
+        description="Processo seletivo atual"
       />
     </div>
   );
 }
-
-export default MyComponent;
 ```
 
-## Development
+#### Props
 
-This project uses [Storybook](https://storybook.js.org/) for component development. To start the development server, run:
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | - | **Required.** The title displayed at the top of the card |
+| `count` | `number` | - | **Required.** The main number to display |
+| `maxCount` | `number` | - | Optional maximum count for progress indication |
+| `description` | `string` | - | Optional description text below the title |
+| `variant` | `"default" \| "percentage"` | `"default"` | Visual variant - percentage shows color coding |
+| `className` | `string` | `""` | Additional CSS classes |
+| `showSlotsInfo` | `boolean` | `false` | Whether to show remaining slots information |
+| `slotsAvailableText` | `string` | `"slots disponíveis"` | Text for available slots |
+
+#### Visual Variants
+
+- **default**: Simple counter display
+- **percentage**: Color-coded based on percentage filled:
+  - 🟢 Green: < 60%
+  - 🟡 Yellow: 60-89%
+  - 🔴 Red: ≥ 90%
+
+#### Examples
+
+```tsx
+// Simple counter
+<CounterCard
+  title="Downloads"
+  count={42580}
+/>
+
+// Progress with custom text
+<CounterCard
+  title="Event Registrations"
+  count={45}
+  maxCount={50}
+  variant="percentage"
+  showSlotsInfo={true}
+  slotsAvailableText="spots remaining"
+  description="Summer Conference 2024"
+/>
+
+// With custom styling
+<CounterCard
+  title="Revenue"
+  count={125000}
+  className="bg-gradient-to-r from-blue-50 to-indigo-50"
+  description="This month"
+/>
+```
+
+## 🔧 Versioning
+
+This library uses [Semantic Versioning](https://semver.org/) and Git tags for version control. 
+
+### Latest Version: v0.0.2
+
+- Fixed deployment configurations
+- Enhanced CI/CD pipeline
+- Improved commitizen configuration
+- 100% test coverage maintained
+
+### Updating
+
+To update to the latest version:
+
+```bash
+npm install github:edgardamasceno-dev/beta-builders-design-system#v0.0.2
+```
+
+## 📚 Development
+
+This project uses [Storybook](https://storybook.js.org/) for component development. To start the development server:
 
 ```bash
 npm run dev
@@ -128,3 +217,7 @@ npm run test:e2e
 # Run all tests
 npm test
 ```
+
+## 📄 License
+
+This project is available under the MIT License.
